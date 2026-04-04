@@ -55,6 +55,10 @@
       border-width: 1px;
       border-color: Black;
   }
+  /* 奖项板块样式适配 */
+  autocolor {
+    color: #000;
+  }
   </style>
 <!--  <link rel="shortcut icon" href="images/tairan&h1_ig.png">-->
   <script type="text/javascript" src="js/hidebib.js"></script>
@@ -309,8 +313,52 @@
 
 </table>
 
+<!-- 新增奖项板块 -->
+<!-- 新增奖项板块 -->
+<hr/>
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="10">
+  <tr><td><sectionheading>&nbsp;&nbsp;Awards</sectionheading></td></tr>
+</table>
+
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="15">
+  <tr>
+    <td style="text-align: justify; font-size: 16px; padding-left: 20px;">
+      <h4 style="margin:0 0 8px 10px;">2025</h4>
+      <ul style="margin:0 0 15px 10px;">
+        <li>一等学业奖学金 <span style="color:#e74d3c;">7%</span></li>
+        <li>科研创新奖学金 <span style="color:#e74d3c;">8%</span></li>
+        <li>中大检测优秀学生奖学金 <span style="color:#e74d3c;">4/500+</span></li>
+        <li>校级优秀学生 <span style="color:#e74d3c;">7%</span></li>
+        <li>华数杯全国大学生数学建模竞赛<span style="color:#e74d3c;">全国二等奖</span></li>
+        <li>全国大学生数学建模国赛<span style="color:#e74d3c;">湖南省二等奖</span></li>
+        
+      </ul>
+
+      <h4 style="margin:0 0 8px 10px;">2024</h4>
+      <ul style="margin:0 0 15px 10px;">
+        <li>一等学业奖学金 <span style="color:#e74d3c;">7%</span></li>
+        <li>科研创新奖学金 <span style="color:#e74d3c;">8%</span></li>
+        <li>中大检测优秀学生奖学金 <span style="color:#e74d3c;">4/500+</span></li>
+        <li>校级优秀学生 <span style="color:#e74d3c;">7%</span></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
 <script>
-// 第2个视频控制
+// 第1个项目视频 SmartFlex
+function toggleVideo1() {
+  let video = document.getElementById('SmartFlex-video');
+  if (video.style.display === 'none') {
+    video.style.display = 'block';
+    video.play();
+  } else {
+    video.style.display = 'none';
+    video.pause();
+  }
+}
+
+// 第2个项目视频 pd
 function toggleVideo2() {
   let video = document.getElementById('pd-video');
   if (video.style.display === 'none') {
@@ -321,8 +369,9 @@ function toggleVideo2() {
     video.pause();
   }
 }
-// 第3个视频控制
-function toggleVideo4() {
+
+// 第3个项目视频 prosthesis
+function toggleVideo3() {
   let video = document.getElementById('prosthesis-video');
   if (video.style.display === 'none') {
     video.style.display = 'block';
@@ -332,7 +381,8 @@ function toggleVideo4() {
     video.pause();
   }
 }
-// 第4个视频控制
+
+// 第4个项目视频 digitalhuman
 function toggleVideo4() {
   let video = document.getElementById('digitalhuman-video');
   if (video.style.display === 'none') {
