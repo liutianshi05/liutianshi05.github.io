@@ -134,16 +134,29 @@
     </p>
     <div class="paper" id="pd">
       | <a href="https://assets-eu.researchsquare.com/files/rs-8883462/v1_covered_6cd0b26d-58a3-4bbd-be15-2abf82f41518.pdf?c=1771474888">pdf</a> |
-      <a href="javascript:void(0)" onclick="document.getElementById('pd-video').style.display='block'; document.getElementById('pd-video').play()"> video</a> |
+      <a href="javascript:void(0)" onclick="toggleVideo()"> video</a> |
     </div>
 
-    <!-- 视频区域：默认隐藏，点击 video 后显示并播放 -->
-    <video id="pd-video" width="100%" style="display:none; margin-top:10px; border-radius:10px;" muted playsinline controls>
+
+    <video id="pd-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls onclick="this.style.display='none'; this.pause();">
       <source src="images/pd/pd-video.mp4" type="video/mp4">
     </video>
   </td>
 </tr>
 
+
+<script>
+function toggleVideo() {
+  let video = document.getElementById('pd-video');
+  if (video.style.display === 'none') {
+    video.style.display = 'block';
+    video.play();
+  } else {
+    video.style.display = 'none';
+    video.pause();
+  }
+}
+</script>
 
 
 
