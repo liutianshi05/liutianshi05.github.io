@@ -116,7 +116,7 @@
 
 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="15">
 
-    <!-- 第一个项目 行 -->
+    <!-- 第1个项目 行 -->
   <tr>
     <td width="30%" valign="top" align="center">
       <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
@@ -132,8 +132,8 @@
       <strong>xxxxxx</strong> 2026 [在投]<br>
       </p>
       <div class="paper" id="SmartFlex">
-        | <a href="https://assets-eu.researchsquare.com/files/rs-8883462/v1_covered_6cd0b26d-58a3-4bbd-be15-2abf82f41518.pdf?c=1771474888" target="_blank">pdf</a> |
-        <a href="javascript:void(0)" onclick="toggleVideo1()"> video</a> | 关键词：帕金森、步态识别、人机交互 |
+        | <a href="images/SmartFlex/SmartFlex-pdf.pdf" target="_blank">pdf</a> |
+        <a href="javascript:void(0)" onclick="toggleVideo1()"> video</a> | 关键词：激光诱导石墨烯、步态动力学、病理检测 |
       </div>
 
       <video id="SmartFlex-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls>
@@ -147,7 +147,7 @@
     <td colspan="2"><hr></td>
   </tr>
 
-  <!-- 第一个项目 行 -->
+  <!-- 第2个项目 行 -->
   <tr>
     <td width="30%" valign="top" align="center">
       <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
@@ -164,7 +164,7 @@
       </p>
       <div class="paper" id="pd">
         | <a href="https://assets-eu.researchsquare.com/files/rs-8883462/v1_covered_6cd0b26d-58a3-4bbd-be15-2abf82f41518.pdf?c=1771474888" target="_blank">pdf</a> |
-        <a href="javascript:void(0)" onclick="toggleVideo1()"> video</a> | 关键词：帕金森、步态识别、人机交互 |
+        <a href="javascript:void(0)" onclick="toggleVideo2()"> video</a> | 关键词：帕金森、步态识别、人机交互 |
       </div>
 
       <video id="pd-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls>
@@ -173,12 +173,113 @@
     </td>
   </tr>
 
+
+    <!-- 分隔线 -->
+  <tr>
+    <td colspan="2"><hr></td>
+  </tr>
+
+  <!-- 第3个项目 行 -->
+
+<tr>
+  <td width="30%" valign="middle" align="center">
+    <div style="width: 90%; margin: 0 auto;">
+      <video src="images/prosthesis/prosthesis-for-preview.mp4"
+             style="width: 100%; height: auto; border-radius:15px;"
+             autoplay
+             muted
+             loop
+             playsinline>
+      </video>
+    </div>
+  </td>
+
+  <td width="70%" valign="middle" style="text-align: justify; font-size: 16px;">
+    <p>
+    <heading style="font-size: 20px;">压阻-摩擦电双模态柔性假肢内衬套及其界面压力监测研究</heading><br><br>
+    清华大学机械工程系智能与生物机械实验室  线下实习项目<br><br>
+    </p>
+    <div class="paper" id="prosthesis">
+      | <a href="javascript:void(0)" onclick="toggleVideo3()">video</a>
+      | <a href="javascript:void(0)" onclick="openGallery()">photos</a>
+      | 关键词：假肢内衬套、激光诱导石墨烯、摩擦电 |
+    </div>
+
+    <video id="prosthesis-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls>
+      <source src="images/prosthesis/prosthesis-video.mp4" type="video/mp4">
+    </video>
+
+    <!-- 图片轮播弹窗 -->
+    <div id="gallery-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+
+      <!-- 关闭按钮 -->
+      <span onclick="closeGallery()" style="position:absolute; top:20px; right:30px; color:white; font-size:30px; cursor:pointer;">&times;</span>
+
+      <!-- 左箭头 -->
+      <span onclick="prevImg()" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); color:white; font-size:40px; cursor:pointer; user-select:none;">&lsaquo;</span>
+
+      <!-- 当前图片 -->
+      <img id="gallery-img" style="max-width:80%; max-height:80%; object-fit:contain;">
+
+      <!-- 右箭头 -->
+      <span onclick="nextImg()" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); color:white; font-size:40px; cursor:pointer; user-select:none;">&rsaquo;</span>
+    </div>
+
+    <script>
+      // 在这里配置你的所有图片路径
+      const galleryImages = [
+        "images/prosthesis/photo1.jpg",
+        "images/prosthesis/photo2.jpg",
+        "images/prosthesis/photo3.jpg",
+        "images/prosthesis/photo4.jpg"
+      ];
+
+      let currentIndex = 0;
+      const modal = document.getElementById("gallery-modal");
+      const img = document.getElementById("gallery-img");
+
+      function openGallery() {
+        currentIndex = 0;
+        img.src = galleryImages[currentIndex];
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeGallery() {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function prevImg() {
+        currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        img.src = galleryImages[currentIndex];
+      }
+
+      function nextImg() {
+        currentIndex = (currentIndex + 1) % galleryImages.length;
+        img.src = galleryImages[currentIndex];
+      }
+
+      // ESC 关闭
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") closeGallery();
+      });
+
+      // 点击背景关闭
+      modal.addEventListener("click", function(e) {
+        if (e.target === modal) closeGallery();
+      });
+    </script>
+  </td>
+</tr>
+
+
   <!-- 分隔线 -->
   <tr>
     <td colspan="2"><hr></td>
   </tr>
 
-  <!-- 第二个项目 行 -->
+  <!-- 第4个项目 行 -->
 
 <tr>
   <td width="30%" valign="middle" align="center">
@@ -201,7 +302,7 @@
     <strong>AUA Postgraduate Forum</strong> 2025 [已接收]<br>
     </p>
     <div class="paper" id="digitalhuman">
-      | <a href="images/digitalhuman/digitalhuman-pdf.pdf" target="_blank">pdf</a> | <a href="images/digitalhuman/accept.pdf" target="_blank">accept</a> | <a href="javascript:void(0)" onclick="toggleVideo2()"> video</a> | 关键词：人体动捕、深度相机、生物力学解算 |
+      | <a href="images/digitalhuman/digitalhuman-pdf.pdf" target="_blank">pdf</a> | <a href="images/digitalhuman/accept.pdf" target="_blank">accept</a> | <a href="javascript:void(0)" onclick="toggleVideo4()"> video</a> | 关键词：人体动捕、深度相机、生物力学解算 |
     </div>
 
     <video id="digitalhuman-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls>
@@ -213,8 +314,8 @@
 </table>
 
 <script>
-// 第一个视频控制
-function toggleVideo1() {
+// 第2个视频控制
+function toggleVideo2() {
   let video = document.getElementById('pd-video');
   if (video.style.display === 'none') {
     video.style.display = 'block';
@@ -224,8 +325,19 @@ function toggleVideo1() {
     video.pause();
   }
 }
-// 第二个视频控制
-function toggleVideo2() {
+// 第3个视频控制
+function toggleVideo4() {
+  let video = document.getElementById('prosthesis-video');
+  if (video.style.display === 'none') {
+    video.style.display = 'block';
+    video.play();
+  } else {
+    video.style.display = 'none';
+    video.pause();
+  }
+}
+// 第4个视频控制
+function toggleVideo4() {
   let video = document.getElementById('digitalhuman-video');
   if (video.style.display === 'none') {
     video.style.display = 'block';
