@@ -187,19 +187,19 @@
 
 <tr>
   <td width="30%" valign="middle" align="center">
-      <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-        <img src="prosthesis/prosthesis/prosthesis-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px;">
-      </div>
-    </td>
+    <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
+      <img src="images/prosthesis/prosthesis-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px;">
+    </div>
+  </td>
 
   <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
     <p>
-    <heading style="font-size: 20px;">（3）压阻-摩擦电双模态柔性假肢内衬套及其界面压力监测研究</heading><br><br>
-    清华大学机械工程系智能与生物机械实验室<br>
+      <heading style="font-size: 20px;">(3)压阻-摩擦电双模态柔性假肢内衬套及其界面压力监测研究</heading><br><br>
+      清华大学机械工程系智能与生物机械实验室<br>
       线下实习项目<br><br>
     </p>
     <div class="paper" id="prosthesis">
-      | <a href="javascript:void(0)" onclick="toggleVideo3()">video</a>
+      | <a href="javascript:void(0)" onclick="openVideoModal()">video</a>
       | <a href="javascript:void(0)" onclick="openGallery()">photos</a>
       | 关键词：假肢内衬套、激光诱导石墨烯、摩擦电 |
     </div>
@@ -208,7 +208,8 @@
     <div id="video-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
       <span onclick="closeVideoModal()" style="position:absolute; top:20px; right:30px; color:white; font-size:50px; cursor:pointer; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">&times;</span>
       <span onclick="prevVideo()" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&lsaquo;</span>
-      <video id="gallery-video" width="80%" style="max-height:80%; border-radius:10px;" muted playsinline controls></video>
+      <!-- 修复：视频标签加关键属性 + 防止遮挡 -->
+      <video id="gallery-video" width="80%" style="max-height:80%; border-radius:10px; position:relative; z-index:10;" muted playsinline controls preload="metadata"></video>
       <span onclick="nextVideo()" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&rsaquo;</span>
     </div>
 
@@ -221,7 +222,7 @@
     </div>
 
     <script>
-      // 图片轮播配置
+      // 图片配置
       const galleryImages = [
         "images/prosthesis/photo1.jpg",
         "images/prosthesis/photo2.jpg",
@@ -231,20 +232,20 @@
       const modal = document.getElementById("gallery-modal");
       const img = document.getElementById("gallery-img");
 
-      // 视频轮播配置
+      // 视频配置
       const galleryVideos = [
-        "images/prosthesis/prosthesis-video1.mp4",
-        "images/prosthesis/prosthesis-video2.mp4"
+        // 改成你实际路径：
+
+        "images/prosthesis/video1.mp4",
+        "images/prosthesis/video2.mp4"
       ];
       let currentVideoIndex = 0;
       const videoModal = document.getElementById("video-modal");
       const videoElement = document.getElementById("gallery-video");
 
-      // 触屏变量
-      let touchStartX = 0;
-      let touchEndX = 0;
+      let touchStartX = 0, touchEndX = 0;
 
-      // ==================== 图片弹窗 ====================
+      // ==================== 图片 ====================
       function openGallery() {
         currentIndex = 0;
         img.src = galleryImages[currentIndex];
@@ -264,13 +265,11 @@
         img.src = galleryImages[currentIndex];
       }
 
-      // ==================== 视频弹窗 ====================
-      function toggleVideo3() {
-        openVideoModal();
-      }
+      // ==================== 视频（修复版） ====================
       function openVideoModal() {
         currentVideoIndex = 0;
         videoElement.src = galleryVideos[currentVideoIndex];
+        videoElement.load(); // 强制加载（关键修复）
         videoModal.style.display = "flex";
         document.body.style.overflow = "hidden";
       }
@@ -283,41 +282,36 @@
         videoElement.pause();
         currentVideoIndex = (currentVideoIndex - 1 + galleryVideos.length) % galleryVideos.length;
         videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load();
+        videoElement.load(); // 必须load()
       }
       function nextVideo() {
         videoElement.pause();
         currentVideoIndex = (currentVideoIndex + 1) % galleryVideos.length;
         videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load();
+        videoElement.load(); // 必须load()
       }
 
-      // ==================== 触屏滑动（同时支持图片 + 视频） ====================
-      function handleSwipe(modalType) {
+      // ==================== 触屏滑动 ====================
+      function handleSwipe(isVideo) {
         const swipeThreshold = 50;
         const diff = touchEndX - touchStartX;
-        if (diff > swipeThreshold) {
-          modalType === "image" ? prevImg() : prevVideo();
-        } else if (diff < -swipeThreshold) {
-          modalType === "image" ? nextImg() : nextVideo();
-        }
+        if (diff > swipeThreshold) isVideo ? prevVideo() : prevImg();
+        else if (diff < -swipeThreshold) isVideo ? nextVideo() : nextImg();
       }
 
-      // 图片触屏
       img.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
       img.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
-        handleSwipe("image");
+        handleSwipe(false);
       });
 
-      // 视频触屏
       videoElement.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
       videoElement.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
-        handleSwipe("video");
+        handleSwipe(true);
       });
 
-      // ESC 关闭
+      // ESC关闭
       document.addEventListener("keydown", e => {
         if (e.key === "Escape") { closeGallery(); closeVideoModal(); }
       });
