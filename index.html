@@ -131,7 +131,7 @@
     <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
       <p>
       <heading style="font-size: 20px;">（1）面向现实场景连续监测与病理早期筛查的可穿戴步态动力学重建</heading><br><br>
-      </i>Intelligent wearable system with spatiotemporal modeling for continuous gait kinetics reconstruction</i><br><br>
+      <i>Intelligent wearable system with spatiotemporal modeling for continuous gait kinetics reconstruction</i><br><br>
       T.Liu#（刘天适）, T.Cheng#, K.Wu, X.Chen, H.Liu, J.Cheng*（程嘉）, X.Qu*（曲学铖）, F.Mo*（莫富灏）<br><br>
       <strong>xxxxxx</strong> 2026 [在投]<br>
       </p>
@@ -144,7 +144,7 @@
         <source src="images/SmartFlex/SmartFlex-video.mp4" type="video/mp4">
       </video>
       <hr>
-      </i>面向连续运动感知的可穿戴步态生物力学监测系统设计</i><br><br>
+      <i>面向连续运动感知的可穿戴步态生物力学监测系统设计</i><br><br>
       刘天适, 程铁峰, 程相熔, 莫富灏*, 程嘉*<br><br>
       <strong>REC</strong> 2026 [已接收]<br>
     </td>
@@ -166,7 +166,7 @@
     <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
       <p>
       <heading style="font-size: 20px;">（2）时空振动触觉智能电子皮肤实现帕金森病个性化步态康复</heading><br><br>
-      An intelligent E-skin with spatiotemporal vibrotactile cues enable personalized gait rehabilitation in Parkinson's disease<br><br>
+      <i>An intelligent E-skin with spatiotemporal vibrotactile cues enable personalized gait rehabilitation in Parkinson's disease</i><br><br>
       T.Cheng#, Y.Kong#, K.Wu#, Z.Liang#, B.Yang, J.Li, T.Liu（刘天适）, C.Chen, H.Yang, B.Pan, J.Cheng*（程嘉）, F.Mo*（莫富灏）<br><br>
       <strong>Nature Communications</strong> 2026 [已返修]<br>
       </p>
@@ -333,8 +333,8 @@
     <td colspan="2"><hr></td>
   </tr>
 
-  <!-- 第4个项目 行 -->
 
+  <!-- 第4个项目 行 -->
 <tr>
   <td width="30%" valign="middle" align="center">
       <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
@@ -342,27 +342,89 @@
       </div>
     </td>
 
-
   <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
     <p>
     <heading style="font-size: 20px;">（4）数智化耦合人体运动捕捉与骨肌动力学解算平台设计</heading><br><br>
-    An automated platform for coupling human motion capture and musculoskeletal dynamic analysis<br><br>
+    <i>An automated platform for coupling human motion capture and musculoskeletal dynamic analysis</i><br><br>
     T.Cheng, M.Jiang, L.Zhao, T.Liu, Y.Zhang, F.Mo*<br><br>
     <strong>AUA Postgraduate Forum</strong> 2025 [已接收]<br>
     </p>
     <div class="paper" id="digitalhuman">
-      | <a href="images/digitalhuman/digitalhuman-pdf.pdf" target="_blank">pdf</a> | <a href="images/digitalhuman/accept.pdf" target="_blank">accept</a> | <a href="javascript:void(0)" onclick="toggleVideo4()"> video</a> | 关键词：人体动捕、深度相机、生物力学解算 |
+      | <a href="images/digitalhuman/digitalhuman-pdf.pdf" target="_blank">pdf</a> | <a href="images/digitalhuman/accept.pdf" target="_blank">accept</a> | <a href="javascript:void(0)" onclick="openVideoModal2()"> video</a> | 关键词：人体动捕、深度相机、生物力学解算 |
     </div>
 
-    <video id="digitalhuman-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls>
-      <source src="images/digitalhuman/digitalhuman-video1.mp4" type="video/mp4">
-    </video>
+    <!-- digitalhuman 视频轮播弹窗 -->
+    <div id="video-modal2" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+      <span onclick="closeVideoModal2()" style="position:absolute; top:20px; right:30px; color:white; font-size:50px; cursor:pointer; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">&times;</span>
+      <span onclick="prevVideo2()" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&lsaquo;</span>
+      <video id="gallery-video2" width="80%" style="max-height:80%; border-radius:10px; position:relative; z-index:10;" muted playsinline controls preload="metadata"></video>
+      <span onclick="nextVideo2()" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&rsaquo;</span>
+    </div>
+
+    <script>
+      // ==================== digitalhuman 独立视频轮播 ====================
+      const galleryVideos2 = [
+        "images/digitalhuman/digitalhuman-video1.mp4",
+        "images/digitalhuman/digitalhuman-video2.mp4"
+      ];
+      let currentVideoIndex2 = 0;
+      const videoModal2 = document.getElementById("video-modal2");
+      const videoElement2 = document.getElementById("gallery-video2");
+
+      let touchStartX2 = 0, touchEndX2 = 0;
+
+      function openVideoModal2() {
+        currentVideoIndex2 = 0;
+        videoElement2.src = galleryVideos2[currentVideoIndex2];
+        videoElement2.load();
+        videoModal2.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+      function closeVideoModal2() {
+        videoModal2.style.display = "none";
+        document.body.style.overflow = "auto";
+        videoElement2.pause();
+      }
+      function prevVideo2() {
+        videoElement2.pause();
+        currentVideoIndex2 = (currentVideoIndex2 - 1 + galleryVideos2.length) % galleryVideos2.length;
+        videoElement2.src = galleryVideos2[currentVideoIndex2];
+        videoElement2.load();
+      }
+      function nextVideo2() {
+        videoElement2.pause();
+        currentVideoIndex2 = (currentVideoIndex2 + 1) % galleryVideos2.length;
+        videoElement2.src = galleryVideos2[currentVideoIndex2];
+        videoElement2.load();
+      }
+
+      // 触屏滑动
+      videoElement2.addEventListener('touchstart', function(e) {
+        touchStartX2 = e.changedTouches[0].screenX;
+      });
+      videoElement2.addEventListener('touchend', function(e) {
+        touchEndX2 = e.changedTouches[0].screenX;
+        const diff = touchEndX2 - touchStartX2;
+        if (diff > 50) prevVideo2();
+        else if (diff < -50) nextVideo2();
+      });
+
+      // ESC关闭
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") closeVideoModal2();
+      });
+
+      // 禁止穿透
+      videoModal2.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+      }, { passive: false });
+    </script>
   </td>
 </tr>
 
 </table>
 
-<!-- 新增奖项板块 -->
+
 <!-- 新增奖项板块 -->
 <hr/>
 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="10">
