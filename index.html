@@ -1,594 +1,134 @@
-<!DOCTYPE HTML PUBLIC "-//W3//DTD HTML 4.01 Transitional//EN">
-<html>
-
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org">
-  <style type="text/css">
-  /* Design Credits: Jon Barron and Deepak Pathak and Abhishek Kar and Saurabh Gupta*/
-  a {
-  color: #1772d0;
-  text-decoration:none;
-  }
-  a:focus, a:hover {
-  color: #f09228;
-  text-decoration:none;
-  }
-  /* 核心：统一中英文字体 */
-  body,td,th {
-    font-family: "Times New Roman", 宋体, serif; /* 英文Times New Roman，中文宋体 */
-    font-size: 16px;
-    font-weight: 400
-  }
-  heading {
-    font-family: "Times New Roman", 宋体, serif;
-    font-size: 17px; /* 19 */
-    font-weight: 600 /* 1000 */
-  }
-  hr
-  {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-  }
-  strong {
-    font-family: "Times New Roman", 宋体, serif;
-    font-size: 16px;
-    font-weight: 600 /* 800 */
-  }
-  strongred {
-    font-family: "Times New Roman", 宋体, serif;
-    color: red ; /* 原代码单引号多余，已移除 */
-    font-size: 16px
-  }
-  sectionheading {
-    font-family: "Times New Roman", 宋体, serif;
-    font-size: 22px;
-    font-weight: 600
-  }
-  pageheading {
-    font-family: "Times New Roman", 宋体, serif;
-    font-size: 38px;
-    font-weight: 400
-  }
-  .ImageBorder
-  {
-      border-width: 1px;
-      border-color: Black;
-  }
-  /* 奖项板块样式适配 */
-  autocolor {
-    color: #000;
-  }
+    <meta charset="UTF-8">
+    <!-- 核心：移动端视口配置（解决字体错乱的关键） -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>个人项目展示</title>
+    <style>
+        /* 全局基础样式：响应式字体基准 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            font-size: 16px; /* 基准：1rem = 16px */
+        }
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
 
-  /* 全局单图放大弹窗样式 */
-  .img-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-  }
-  .img-modal-close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 50px;
-    cursor: pointer;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .img-modal-content {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-    border-radius: 10px;
-  }
-</style>
-<!--  <link rel="shortcut icon" href="images/tairan&h1_ig.png">-->
-  <script type="text/javascript" src="js/hidebib.js"></script>
-  <title>Tianshi Liu</title>
-  <meta name="Tianshi Liu's Homepage" http-equiv="Content-Type" content="Tianshi Liu's Homepage">
+        /* 外层容器：替代表格，居中+自适应宽度 */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-  <!-- Start : Google Analytics Code -->
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-XXXXX-Y', 'auto');
-    ga('send', 'pageview');
-    </script>
-  <!-- End : Google Analytics Code -->
-  <!-- Scramble Script by Jeff Donahue -->
-  <script src="js/scramble.js"></script>
+        /* 标题样式：使用rem单位，自动适配屏幕 */
+        .page-title {
+            font-size: 2.375rem; /* 38px */
+            text-align: center;
+            margin: 20px 0;
+            color: #222;
+        }
+        .section-title {
+            font-size: 1.25rem; /* 20px */
+            margin: 15px 0;
+            color: #444;
+            border-left: 4px solid #0066cc;
+            padding-left: 10px;
+        }
+
+        /* 项目布局：flex响应式（电脑横向，手机垂直） */
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .project-img {
+            width: 30%;
+            flex-shrink: 0;
+        }
+        .project-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+        }
+        .project-text {
+            width: 70%;
+            flex: 1;
+        }
+
+        /* 移动端适配：屏幕小于768px（手机/平板）自动调整 */
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px; /* 手机端整体字体缩小 */
+            }
+            .project-item {
+                flex-direction: column; /* 手机端垂直排列 */
+                text-align: center;
+            }
+            .project-img,
+            .project-text {
+                width: 100%; /* 手机端占满宽度 */
+            }
+            .page-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* 小屏手机适配 */
+        @media (max-width: 480px) {
+            html {
+                font-size: 12px;
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-<table width="900" align="center" border="0" cellspacing="0" cellpadding="20">
-  <tr><td>
+    <!-- 外层自适应容器 -->
+    <div class="container">
+        <!-- 页面主标题 -->
+        <h1 class="page-title">个人项目作品集</h1>
 
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-  <tr>
-    <td colspan="2" align="center">
-      <pageheading>刘天适</pageheading>
-    </td>
-  </tr>
+        <!-- 项目1 -->
+        <h2 class="section-title">项目一：响应式网页开发</h2>
+        <div class="project-item">
+            <div class="project-img">
+                <img src="项目图片1.jpg" alt="项目展示图">
+            </div>
+            <div class="project-text">
+                <p>该项目采用HTML5+CSS3+响应式布局开发，适配电脑、手机、平板等多终端设备，解决了传统固定布局在移动端字体错乱、布局挤压的问题，提升了用户体验。</p>
+            </div>
+        </div>
 
-  <tr>
-    <td width="30%" valign="middle">
-      <img src="images/lts.jpg" width="100%" style="border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/lts.jpg')">
-      <p align="center" style="font-size: 18px;">
-        | <a href="data/cv.pdf" target="_blank">个人简历</a> |
-      </p>
-    </td>
-
-    <td width="70%" valign="top" align="justify">
-      <p>我目前是湖南大学机械院的大三学生，预计2027年毕业。在此之前，我于2023年毕业于长沙市长郡中学。</p>
-      <p>学业上，我专业排名第一 (1/70)。英语CET-4 644分、CET-6 610分。连续两年获得一等学业奖学金、科研创新奖学金、社会奖学金及校级优秀学生。</p>
-      <p>我在<a href="https://grzy.hnu.edu.cn/site/index/mofuhao" target="_blank">莫富灏</a>教授的指导下开始学习与研究，聚焦智能传感与可穿戴设备。</p>
-      <p>2025年秋冬季至今，我在<a href="https://me.tsinghua.edu.cn/" target="_blank">清华大学机械工程系</a>智能与生物机械实验室实习，师从<a href="https://www.me.tsinghua.edu.cn/info/1091/3511.htm" target="_blank">程嘉</a>研究员、<a href="https://www.me.tsinghua.edu.cn/info/1091/1495.htm" target="_blank">季林红</a>教授，参与柔性可穿戴康复设备研究。</p>
-
-      <p><strong>致力方向：</strong> 智能传感、可穿戴设备、柔性电子</p>
-
-      <p>邮件: lts@hnu.edu.cn</p>
-    </td>
-  </tr>
-</table>
-
-<hr/>
-
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="10">
-  <tr><td><sectionheading>&nbsp;&nbsp;研究经历</sectionheading></td></tr>
-</table>
-
-
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="15">
-
-    <!-- 第1个项目 行 -->
-  <tr>
-    <td width="30%" valign="middle" align="center">
-      <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-        <img src="images/SmartFlex/SmartFlex-for-preview.png" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/SmartFlex/SmartFlex-for-preview.png')">
-      </div>
-    </td>
-
-    <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
-      <p>
-      <heading style="font-size: 20px;">（1）面向现实场景连续监测与病理早期筛查的可穿戴步态动力学重建</heading><br><br>
-      <strong style="text-decoration:underline;">Intelligent wearable system with spatiotemporal modeling for continuous gait kinetics reconstruction</strong><br><br>
-      T.Liu#（刘天适）, T.Cheng#, K.Wu, X.Chen, H.Liu, J.Cheng*（程嘉）, X.Qu*（曲学铖）, F.Mo*（莫富灏）<br><br>
-      <strong>xxxxxx</strong> 2026 [在投]<br>
-      </p>
-      <div class="paper" id="SmartFlex">
-        | <a href="images/SmartFlex/SmartFlex-pdf.pdf" target="_blank">pdf</a> |
-        <a href="javascript:void(0)" onclick="toggleVideo1()"> video</a> | 关键词：激光诱导石墨烯、步态动力学、病理检测 |
-      </div>
-
-      <video id="SmartFlex-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls>
-        <source src="images/SmartFlex/SmartFlex-video.mp4" type="video/mp4">
-      </video>
-      <br><br>
-      <strong style="text-decoration:underline;">Design of a wearable gait biomechanical monitoring system for continuous motion perception.</strong><br><br>
-      T.Liu（刘天适）, T.Cheng, X.Chen, F.Mo*（莫富灏）, J.Cheng*（程嘉）<br><br>
-      <strong>REC</strong> 2026 [已接收]<br>
-    </td>
-  </tr>
-
-  <!-- 分隔线 -->
-  <tr>
-    <td colspan="2"><hr></td>
-  </tr>
-
-  <!-- 第2个项目 行 -->
-  <tr>
-    <td width="30%" valign="middle" align="center">
-      <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-        <img src="images/pd/pd-for-preview.png" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/pd/pd-for-preview.png')">
-      </div>
-    </td>
-
-    <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
-      <p>
-      <heading style="font-size: 20px;">（2）时空振动触觉智能电子皮肤实现帕金森病个性化步态康复</heading><br><br>
-      <strong style="text-decoration:underline;">An intelligent E-skin with spatiotemporal vibrotactile cues enable personalized gait rehabilitation in Parkinson's disease</strong><br><br>
-      T.Cheng#, Y.Kong#, K.Wu#, Z.Liang#, B.Yang, J.Li, T.Liu（刘天适）, C.Chen, H.Yang, B.Pan, J.Cheng*（程嘉）, F.Mo*（莫富灏）<br><br>
-      <strong>Nature Communications</strong> 2026 [已返修]<br>
-      </p>
-      <div class="paper" id="pd">
-        | <a href="https://assets-eu.researchsquare.com/files/rs-8883462/v1_covered_6cd0b26d-58a3-4bbd-be15-2abf82f41518.pdf?c=1771474888" target="_blank">pdf</a> |
-        <a href="javascript:void(0)" onclick="toggleVideo2()"> video</a> | 关键词：帕金森、步态识别、人机交互 |
-      </div>
-
-      <video id="pd-video" width="100%" style="display:none; margin-top:10px; border-radius:10px; cursor:pointer;" muted playsinline controls>
-        <source src="images/pd/pd-video.mp4" type="video/mp4">
-      </video>
-    </td>
-  </tr>
-
-    <!-- 分隔线 -->
-  <tr>
-    <td colspan="2"><hr></td>
-  </tr>
-
-  <!-- 第3个项目 行 -->
-<tr>
-  <td width="30%" valign="middle" align="center">
-    <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-      <img src="images/prosthesis/prosthesis-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/prosthesis/prosthesis-for-preview.jpg')">
+        <!-- 项目2 -->
+        <h2 class="section-title">项目二：移动端适配优化</h2>
+        <div class="project-item">
+            <div class="project-img">
+                <img src="项目图片2.jpg" alt="项目展示图">
+            </div>
+            <div class="project-text">
+                <p>针对移动端进行深度适配，使用rem相对单位、flex布局、viewport视口配置，实现字体、元素尺寸自动适配不同屏幕，彻底解决手机端显示混乱问题。</p>
+            </div>
+        </div>
     </div>
-  </td>
-
-  <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
-    <p>
-      <heading style="font-size: 20px;">（3）压阻-摩擦电双模态柔性假肢内衬套及其界面压力监测研究</heading><br><br>
-      <strong style="text-decoration:underline;">清华大学机械工程系智能与生物机械实验室</strong><br>
-      <strong style="text-decoration:underline;">线下实习项目</strong><br><br>
-    </p>
-    <div class="paper" id="prosthesis">
-      | <a href="javascript:void(0)" onclick="openVideoModal()">video</a>
-      | <a href="javascript:void(0)" onclick="openGallery()">photos</a>
-      | 关键词：假肢内衬套、激光诱导石墨烯、摩擦电 |
-    </div>
-
-    <!-- 视频轮播弹窗 -->
-    <div id="video-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
-      <span onclick="closeVideoModal()" style="position:absolute; top:20px; right:30px; color:white; font-size:50px; cursor:pointer; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">&times;</span>
-      <span onclick="prevVideo()" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&lsaquo;</span>
-      <video id="gallery-video" width="80%" style="max-height:80%; border-radius:10px; position:relative; z-index:10;" muted playsinline controls preload="metadata"></video>
-      <span onclick="nextVideo()" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&rsaquo;</span>
-    </div>
-
-    <!-- 图片轮播弹窗 -->
-    <div id="gallery-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
-      <span onclick="closeGallery()" style="position:absolute; top:20px; right:30px; color:white; font-size:50px; cursor:pointer; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">&times;</span>
-      <span onclick="prevImg()" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&lsaquo;</span>
-      <img id="gallery-img" style="max-width:80%; max-height:80%; object-fit:contain;">
-      <span onclick="nextImg()" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&rsaquo;</span>
-    </div>
-
-    <script>
-      // 图片配置
-      const galleryImages = [
-        "images/prosthesis/photo1.jpg",
-        "images/prosthesis/photo2.jpg",
-        "images/prosthesis/photo3.jpg"
-      ];
-      let currentIndex = 0;
-      const modal = document.getElementById("gallery-modal");
-      const img = document.getElementById("gallery-img");
-
-      // 视频配置
-      const galleryVideos = [
-        "images/prosthesis/video1.mp4",
-        "images/prosthesis/video2.mp4"
-      ];
-      let currentVideoIndex = 0;
-      const videoModal = document.getElementById("video-modal");
-      const videoElement = document.getElementById("gallery-video");
-
-      let touchStartX = 0, touchEndX = 0;
-
-      // ==================== 图片 ====================
-      function openGallery() {
-        currentIndex = 0;
-        img.src = galleryImages[currentIndex];
-        modal.style.display = "flex";
-        document.body.style.overflow = "hidden";
-      }
-      function closeGallery() {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-      }
-      function prevImg() {
-        currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-        img.src = galleryImages[currentIndex];
-      }
-      function nextImg() {
-        currentIndex = (currentIndex + 1) % galleryImages.length;
-        img.src = galleryImages[currentIndex];
-      }
-
-      // ==================== 视频（修复版） ====================
-      function openVideoModal() {
-        currentVideoIndex = 0;
-        videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load();
-        videoModal.style.display = "flex";
-        document.body.style.overflow = "hidden";
-      }
-      function closeVideoModal() {
-        videoModal.style.display = "none";
-        document.body.style.overflow = "auto";
-        videoElement.pause();
-      }
-      function prevVideo() {
-        videoElement.pause();
-        currentVideoIndex = (currentVideoIndex - 1 + galleryVideos.length) % galleryVideos.length;
-        videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load();
-      }
-      function nextVideo() {
-        videoElement.pause();
-        currentVideoIndex = (currentVideoIndex + 1) % galleryVideos.length;
-        videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load();
-      }
-
-      // ==================== 触屏滑动 ====================
-      function handleSwipe(isVideo) {
-        const swipeThreshold = 50;
-        const diff = touchEndX - touchStartX;
-        if (diff > swipeThreshold) isVideo ? prevVideo() : prevImg();
-        else if (diff < -swipeThreshold) isVideo ? nextVideo() : nextImg();
-      }
-
-      img.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-      img.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe(false);
-      });
-
-      videoElement.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-      videoElement.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe(true);
-      });
-
-      // ESC关闭
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape") { closeGallery(); closeVideoModal(); }
-      });
-
-      // 禁止穿透滚动
-      [modal, videoModal].forEach(m => {
-        m.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
-      });
-    </script>
-  </td>
-</tr>
-
-  <!-- 分隔线 -->
-  <tr>
-    <td colspan="2"><hr></td>
-  </tr>
-
-  <!-- 第4个项目 行 -->
-<tr>
-  <td width="30%" valign="middle" align="center">
-      <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-        <img src="images/digitalhuman/digitalhuman-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/digitalhuman/digitalhuman-for-preview.jpg')">
-      </div>
-    </td>
-
-  <td width="70%" valign="top" style="text-align: justify; font-size: 16px;">
-    <p>
-    <heading style="font-size: 20px;">（4）数智化耦合人体运动捕捉与骨肌动力学解算平台设计</heading><br><br>
-    <strong style="text-decoration:underline;">An automated platform for coupling human motion capture and musculoskeletal dynamic analysis</strong><br><br>
-    T.Cheng, M.Jiang, L.Zhao, T.Liu, Y.Zhang, F.Mo*<br><br>
-    <strong>AUA Postgraduate Forum</strong> 2025 [已接收]<br>
-    </p>
-    <div class="paper" id="digitalhuman">
-      | <a href="images/digitalhuman/digitalhuman-pdf.pdf" target="_blank">pdf</a> | <a href="images/digitalhuman/accept.pdf" target="_blank">accept</a> | <a href="javascript:void(0)" onclick="openVideoModal2()"> video</a> | 关键词：人体动捕、深度相机、生物力学解算 |
-    </div>
-
-    <!-- digitalhuman 视频轮播弹窗 -->
-    <div id="video-modal2" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
-      <span onclick="closeVideoModal2()" style="position:absolute; top:20px; right:30px; color:white; font-size:50px; cursor:pointer; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">&times;</span>
-      <span onclick="prevVideo2()" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&lsaquo;</span>
-      <video id="gallery-video2" width="80%" style="max-height:80%; border-radius:10px; position:relative; z-index:10;" muted playsinline controls preload="metadata"></video>
-      <span onclick="nextVideo2()" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&rsaquo;</span>
-    </div>
-
-    <script>
-      // ==================== digitalhuman 独立视频轮播 ====================
-      const galleryVideos2 = [
-        "images/digitalhuman/digitalhuman-video1.mp4",
-        "images/digitalhuman/digitalhuman-video2.mp4"
-      ];
-      let currentVideoIndex2 = 0;
-      const videoModal2 = document.getElementById("video-modal2");
-      const videoElement2 = document.getElementById("gallery-video2");
-
-      let touchStartX2 = 0, touchEndX2 = 0;
-
-      function openVideoModal2() {
-        currentVideoIndex2 = 0;
-        videoElement2.src = galleryVideos2[currentVideoIndex2];
-        videoElement2.load();
-        videoModal2.style.display = "flex";
-        document.body.style.overflow = "hidden";
-      }
-      function closeVideoModal2() {
-        videoModal2.style.display = "none";
-        document.body.style.overflow = "auto";
-        videoElement2.pause();
-      }
-      function prevVideo2() {
-        videoElement2.pause();
-        currentVideoIndex2 = (currentVideoIndex2 - 1 + galleryVideos2.length) % galleryVideos2.length;
-        videoElement2.src = galleryVideos2[currentVideoIndex2];
-        videoElement2.load();
-      }
-      function nextVideo2() {
-        videoElement2.pause();
-        currentVideoIndex2 = (currentVideoIndex2 + 1) % galleryVideos2.length;
-        videoElement2.src = galleryVideos2[currentVideoIndex2];
-        videoElement2.load();
-      }
-
-      // 触屏滑动
-      videoElement2.addEventListener('touchstart', function(e) {
-        touchStartX2 = e.changedTouches[0].screenX;
-      });
-      videoElement2.addEventListener('touchend', function(e) {
-        touchEndX2 = e.changedTouches[0].screenX;
-        const diff = touchEndX2 - touchStartX2;
-        if (diff > 50) prevVideo2();
-        else if (diff < -50) nextVideo2();
-      });
-
-      // ESC关闭
-      document.addEventListener("keydown", function(e) {
-        if (e.key === "Escape") closeVideoModal2();
-      });
-
-      // 禁止穿透
-      videoModal2.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-      }, { passive: false });
-    </script>
-  </td>
-</tr>
-
-</table>
-
-<!-- 全局单图放大弹窗 -->
-<div id="singleImgModal" class="img-modal">
-  <span class="img-modal-close" onclick="closeSingleImgModal()">&times;</span>
-  <img id="singleImgContent" class="img-modal-content">
-</div>
-
-
-<!-- 新增奖项板块 -->
-<hr/>
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="10">
-  <tr><td><sectionheading>&nbsp;&nbsp;其他学术情况</sectionheading></td></tr>
-</table>
-
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="15">
-  <tr>
-    <td style="text-align: justify; font-size: 16px; padding-left: 20px;">
-
-        [1] 一种实时多模态传感器融合的人体运动捕捉与姿态优化方法. CN120850212A[P]. 发明专利<br>
-        [2] 人体运动模式分析平台. 2026SR0374705 [CP]. 软件著作权<br>
-        [3] 人体足压分析系统. 2025SR2314237 [CP]. 软件著作权<br>
-        [4] 基于深度视觉的目标检测与三维定位系统. 2025SR1031897 [CP]. 软件著作权 <br>
-      </ul>
-
-
-    </td>
-  </tr>
-</table>
-
-
-
-
-
-
-
-
-
-<!-- 奖项板块 -->
-<hr/>
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="10">
-  <tr><td><sectionheading>&nbsp;&nbsp;荣誉获奖</sectionheading></td></tr>
-</table>
-
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="15">
-  <tr>
-    <td style="text-align: justify; font-size: 16px; padding-left: 20px;">
-      <h4 style="margin:0 0 8px 10px;color:#04315E; font-weight:bold;">2025</h4>
-      <ul style="margin:0 0 15px 10px;">
-        <li>一等学业奖学金 <span style="color:#04315E; font-weight:bold;">(7%)</span></li>
-        <li>科研创新奖学金 <span style="color:#04315E; font-weight:bold;">(8%)</span></li>
-        <li>中大检测优秀学生奖学金 <span style="color:#04315E; font-weight:bold;">(4/500+)</span></li>
-        <li>校级优秀学生 <span style="color:#04315E; font-weight:bold;">(7%)</span></li>
-        <li>华数杯全国大学生数学建模竞赛<span style="color:#04315E; font-weight:bold;">全国二等奖</span></li>
-        <li>全国大学生数学建模国赛<span style="color:#04315E; font-weight:bold;">湖南省二等奖</span></li>
-      </ul>
-
-      <h4 style="margin:0 0 8px 10px;color:#04315E; font-weight:bold;">2024</h4>
-      <ul style="margin:0 0 15px 10px;">
-        <li>一等学业奖学金 <span style="color:#04315E; font-weight:bold;">(7%)</span></li>
-        <li>科研创新奖学金 <span style="color:#04315E; font-weight:bold;">(8%)</span></li>
-        <li>中大检测优秀学生奖学金 <span style="color:#04315E; font-weight:bold;">(4/500+)</span></li>
-        <li>校级优秀学生 <span style="color:#04315E; font-weight:bold;">(7%)</span></li>
-      </ul>
-    </td>
-  </tr>
-</table>
-
-<script>
-// 全局单图放大功能
-function openSingleImgModal(imgSrc) {
-  document.getElementById('singleImgContent').src = imgSrc;
-  document.getElementById('singleImgModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-function closeSingleImgModal() {
-  document.getElementById('singleImgModal').style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
-// 点击遮罩关闭
-document.getElementById('singleImgModal').onclick = function(e) {
-  if (e.target === this) closeSingleImgModal();
-}
-// ESC关闭
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeSingleImgModal();
-});
-
-// 第1个项目视频 SmartFlex
-function toggleVideo1() {
-  let video = document.getElementById('SmartFlex-video');
-  if (video.style.display === 'none') {
-    video.style.display = 'block';
-    video.play();
-  } else {
-    video.style.display = 'none';
-    video.pause();
-  }
-}
-
-// 第2个项目视频 pd
-function toggleVideo2() {
-  let video = document.getElementById('pd-video');
-  if (video.style.display === 'none') {
-    video.style.display = 'block';
-    video.play();
-  } else {
-    video.style.display = 'none';
-    video.pause();
-  }
-}
-
-// 第3个项目视频 prosthesis
-function toggleVideo3() {
-  let video = document.getElementById('prosthesis-video');
-  if (video.style.display === 'none') {
-    video.style.display = 'block';
-    video.play();
-  } else {
-    video.style.display = 'none';
-    video.pause();
-  }
-}
-
-// 第4个项目视频 digitalhuman
-function toggleVideo4() {
-  let video = document.getElementById('digitalhuman-video');
-  if (video.style.display === 'none') {
-    video.style.display = 'block';
-    video.play();
-  } else {
-    video.style.display = 'none';
-    video.pause();
-  }
-}
-</script>
-
-<hr/>
-
-</td></tr>
-</table>
 </body>
 </html>
