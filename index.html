@@ -59,7 +59,40 @@
   autocolor {
     color: #000;
   }
-  </style>
+
+  /* 全局单图放大弹窗样式 */
+  .img-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+  }
+  .img-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 50px;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .img-modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+</style>
 <!--  <link rel="shortcut icon" href="images/tairan&h1_ig.png">-->
   <script type="text/javascript" src="js/hidebib.js"></script>
   <title>Tianshi Liu</title>
@@ -92,11 +125,11 @@
 
   <tr>
     <td width="30%" valign="middle">
-  <a href="images/lts.jpg" target="_blank"><img src="images/lts.jpg" width="100%" style="border-radius:15px"></a>
-  <p align="center" style="font-size: 18px;">
-    | <a href="data/CV_0404.pdf" target="_blank">个人简历</a> |
-  </p>
-</td>
+      <img src="images/lts.jpg" width="100%" style="border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/lts.jpg')">
+      <p align="center" style="font-size: 18px;">
+        | <a href="data/CV_0404.pdf" target="_blank">个人简历</a> |
+      </p>
+    </td>
 
     <td width="70%" valign="top" align="justify">
       <p>我目前是湖南大学机械院的大三学生，预计2027年毕业。在此之前，我于2023年毕业于长沙市长郡中学。</p>
@@ -124,10 +157,7 @@
   <tr>
     <td width="30%" valign="middle" align="center">
       <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-        <!-- 已添加点击放大 -->
-        <a href="images/SmartFlex/SmartFlex-for-preview.png" target="_blank">
-          <img src="images/SmartFlex/SmartFlex-for-preview.png" style="width: 100%; height: auto; object-fit: cover; border-radius:15px;">
-        </a>
+        <img src="images/SmartFlex/SmartFlex-for-preview.png" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/SmartFlex/SmartFlex-for-preview.png')">
       </div>
     </td>
 
@@ -162,10 +192,7 @@
   <tr>
     <td width="30%" valign="middle" align="center">
       <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-        <!-- 已添加点击放大 -->
-        <a href="images/pd/pd-for-preview.png" target="_blank">
-          <img src="images/pd/pd-for-preview.png" style="width: 100%; height: auto; object-fit: cover; border-radius:15px;">
-        </a>
+        <img src="images/pd/pd-for-preview.png" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/pd/pd-for-preview.png')">
       </div>
     </td>
 
@@ -187,21 +214,16 @@
     </td>
   </tr>
 
-
     <!-- 分隔线 -->
   <tr>
     <td colspan="2"><hr></td>
   </tr>
 
   <!-- 第3个项目 行 -->
-
 <tr>
   <td width="30%" valign="middle" align="center">
     <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-      <!-- 已添加点击放大 -->
-      <a href="images/prosthesis/prosthesis-for-preview.jpg" target="_blank">
-        <img src="images/prosthesis/prosthesis-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px;">
-      </a>
+      <img src="images/prosthesis/prosthesis-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/prosthesis/prosthesis-for-preview.jpg')">
     </div>
   </td>
 
@@ -221,7 +243,6 @@
     <div id="video-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
       <span onclick="closeVideoModal()" style="position:absolute; top:20px; right:30px; color:white; font-size:50px; cursor:pointer; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">&times;</span>
       <span onclick="prevVideo()" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&lsaquo;</span>
-      <!-- 修复：视频标签加关键属性 + 防止遮挡 -->
       <video id="gallery-video" width="80%" style="max-height:80%; border-radius:10px; position:relative; z-index:10;" muted playsinline controls preload="metadata"></video>
       <span onclick="nextVideo()" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">&rsaquo;</span>
     </div>
@@ -247,8 +268,6 @@
 
       // 视频配置
       const galleryVideos = [
-        // 改成你实际路径：
-
         "images/prosthesis/video1.mp4",
         "images/prosthesis/video2.mp4"
       ];
@@ -282,7 +301,7 @@
       function openVideoModal() {
         currentVideoIndex = 0;
         videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load(); // 强制加载（关键修复）
+        videoElement.load();
         videoModal.style.display = "flex";
         document.body.style.overflow = "hidden";
       }
@@ -295,13 +314,13 @@
         videoElement.pause();
         currentVideoIndex = (currentVideoIndex - 1 + galleryVideos.length) % galleryVideos.length;
         videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load(); // 必须load()
+        videoElement.load();
       }
       function nextVideo() {
         videoElement.pause();
         currentVideoIndex = (currentVideoIndex + 1) % galleryVideos.length;
         videoElement.src = galleryVideos[currentVideoIndex];
-        videoElement.load(); // 必须load()
+        videoElement.load();
       }
 
       // ==================== 触屏滑动 ====================
@@ -342,15 +361,11 @@
     <td colspan="2"><hr></td>
   </tr>
 
-
   <!-- 第4个项目 行 -->
 <tr>
   <td width="30%" valign="middle" align="center">
       <div style="width: 90%; display: flex; align-items: center; justify-content: center;">
-        <!-- 已添加点击放大 -->
-        <a href="images/digitalhuman/digitalhuman-for-preview.jpg" target="_blank">
-          <img src="images/digitalhuman/digitalhuman-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px;">
-        </a>
+        <img src="images/digitalhuman/digitalhuman-for-preview.jpg" style="width: 100%; height: auto; object-fit: cover; border-radius:15px; cursor:pointer;" onclick="openSingleImgModal('images/digitalhuman/digitalhuman-for-preview.jpg')">
       </div>
     </td>
 
@@ -436,6 +451,11 @@
 
 </table>
 
+<!-- 全局单图放大弹窗 -->
+<div id="singleImgModal" class="img-modal">
+  <span class="img-modal-close" onclick="closeSingleImgModal()">&times;</span>
+  <img id="singleImgContent" class="img-modal-content">
+</div>
 
 <!-- 新增奖项板块 -->
 <hr/>
@@ -468,6 +488,25 @@
 </table>
 
 <script>
+// 全局单图放大功能
+function openSingleImgModal(imgSrc) {
+  document.getElementById('singleImgContent').src = imgSrc;
+  document.getElementById('singleImgModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeSingleImgModal() {
+  document.getElementById('singleImgModal').style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+// 点击遮罩关闭
+document.getElementById('singleImgModal').onclick = function(e) {
+  if (e.target === this) closeSingleImgModal();
+}
+// ESC关闭
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeSingleImgModal();
+});
+
 // 第1个项目视频 SmartFlex
 function toggleVideo1() {
   let video = document.getElementById('SmartFlex-video');
@@ -521,6 +560,5 @@ function toggleVideo4() {
 
 </td></tr>
 </table>
-
 </body>
 </html>
