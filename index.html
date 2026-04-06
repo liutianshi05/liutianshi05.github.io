@@ -525,27 +525,12 @@
   <tr><td><sectionheading>&nbsp;&nbsp;生活</sectionheading></td></tr>
 </table>
 
-<!-- 生活照片网格 -->
+<!-- 生活照片网格（会自动生成图片） -->
 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="15">
   <tr>
     <td>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-        <!-- 照片1 -->
-        <img src="images/life/1.jpg"
-             style="width:100%; height:180px; object-fit:cover; border-radius:12px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.1);"
-             onclick="openLifeGallery(0)">
-        <!-- 照片2 -->
-        <img src="images/life/2.jpg"
-             style="width:100%; height:180px; object-fit:cover; border-radius:12px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.1);"
-             onclick="openLifeGallery(1)">
-        <!-- 照片3 -->
-        <img src="images/life/3.jpg"
-             style="width:100%; height:180px; object-fit:cover; border-radius:12px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.1);"
-             onclick="openLifeGallery(2)">
-        <!-- 照片4 -->
-        <img src="images/life/4.jpg"
-             style="width:100%; height:180px; object-fit:cover; border-radius:12px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.1);"
-             onclick="openLifeGallery(3)">
+      <div id="lifeGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+        <!-- 这里会自动生成图片，不需要手动写 img！ -->
       </div>
     </td>
   </tr>
@@ -553,34 +538,50 @@
 
 <!-- 生活照片 轮播放大弹窗（带底部描述） -->
 <div id="lifeGalleryModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; flex-direction:column; align-items:center; justify-content:center;">
-  <!-- 关闭按钮 -->
   <span onclick="closeLifeGallery()" style="position:absolute; top:20px; right:30px; color:white; font-size:50px; cursor-pointer; user-select:none;">&times;</span>
-
-  <!-- 左右切换 -->
   <span onclick="prevLifeImg()" style="position:absolute; left:30px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none;">&lsaquo;</span>
   <span onclick="nextLifeImg()" style="position:absolute; right:30px; top:50%; transform:translateY(-50%); color:white; font-size:60px; cursor:pointer; user-select:none;">&rsaquo;</span>
-
-  <!-- 大图 -->
   <img id="lifeGalleryImg" style="max-width:90%; max-height:75vh; object-fit:contain; border-radius:8px;">
-
-  <!-- 底部描述文字 -->
   <div id="lifeImgDesc" style="color:white; font-size:18px; margin-top:20px; text-align:center; max-width:80%; line-height:1.6;"></div>
 </div>
 
 <script>
-// ==================== 生活相册配置（可自行增删改） ====================
+// ==================== 生活相册配置（只在这里加照片！） ====================
 const lifeGallery = [
-  { src: "images/life/1.jpg", desc: "2025年冬，清华机械系智能实验室科研日常" },
-  { src: "images/life/2.jpg", desc: "湖南大学机械院课题组学术交流" },
-  { src: "images/life/3.jpg", desc: "长沙·岳麓山，科研之余放松时刻" }
+  { src: "images/life/1.jpg", desc: "2026.01 北京" },
+  { src: "images/life/2.jpg", desc: "2025.12 西安" },
+  { src: "images/life/3.jpg", desc: "2025.03 南京" },
+  { src: "images/life/4.jpg", desc: "2025.01 宜春" },
+  { src: "images/life/5.jpg", desc: "2024.10 萍乡" },
+  // 以后加照片 👇 只在这里加一行！自动显示、自动点击、自动轮播
+  // { src: "images/life/6.jpg", desc: "新照片描述" },
 ];
 
+// ==================== 自动渲染图片（你不用管） ====================
+const grid = document.getElementById("lifeGrid");
+lifeGallery.forEach((item, i) => {
+  const img = document.createElement("img");
+  img.src = item.src;
+  img.style.cssText = `
+    width:100%;
+    height:auto;
+    max-height:220px;
+    object-fit:contain;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    background:#f5f5f5;
+  `;
+  img.onclick = () => openLifeGallery(i);
+  grid.appendChild(img);
+});
+
+// ==================== 弹窗功能 ====================
 let lifeCurrentIndex = 0;
 const lifeModal = document.getElementById("lifeGalleryModal");
 const lifeImg = document.getElementById("lifeGalleryImg");
 const lifeDesc = document.getElementById("lifeImgDesc");
 
-// 打开相册
 function openLifeGallery(index) {
   lifeCurrentIndex = index;
   lifeImg.src = lifeGallery[lifeCurrentIndex].src;
@@ -589,27 +590,24 @@ function openLifeGallery(index) {
   document.body.style.overflow = "hidden";
 }
 
-// 关闭相册
 function closeLifeGallery() {
   lifeModal.style.display = "none";
   document.body.style.overflow = "auto";
 }
 
-// 上一张
 function prevLifeImg() {
   lifeCurrentIndex = (lifeCurrentIndex - 1 + lifeGallery.length) % lifeGallery.length;
   lifeImg.src = lifeGallery[lifeCurrentIndex].src;
   lifeDesc.innerText = lifeGallery[lifeCurrentIndex].desc;
 }
 
-// 下一张
 function nextLifeImg() {
   lifeCurrentIndex = (lifeCurrentIndex + 1) % lifeGallery.length;
   lifeImg.src = lifeGallery[lifeCurrentIndex].src;
   lifeDesc.innerText = lifeGallery[lifeCurrentIndex].desc;
 }
 
-// 触屏滑动切换
+// 触屏滑动
 let lifeTouchStartX = 0, lifeTouchEndX = 0;
 lifeImg.addEventListener('touchstart', e => { lifeTouchStartX = e.changedTouches[0].screenX; });
 lifeImg.addEventListener('touchend', e => {
@@ -619,16 +617,17 @@ lifeImg.addEventListener('touchend', e => {
   else if (diff < -60) nextLifeImg();
 });
 
-// ESC 关闭
+// ESC关闭
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeLifeGallery();
 });
 
 // 点击背景关闭
-lifeModal.onclick = function(e) {
-  if (e.target === lifeModal) closeLifeGallery();
-}
+lifeModal.onclick = (e) => { if (e.target === lifeModal) closeLifeGallery(); }
 </script>
+
+
+
 
 <script>
 // 全局单图放大功能
